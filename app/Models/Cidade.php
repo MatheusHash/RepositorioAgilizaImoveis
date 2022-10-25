@@ -13,4 +13,8 @@ class Cidade extends Model
       'nome',
       'isCidade',
     ];
+
+    public function imovel(){
+        return $this->hasMany(Bairro::class, 'cidade_id', 'id');
+    }
 }

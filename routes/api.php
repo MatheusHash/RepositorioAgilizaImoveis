@@ -18,5 +18,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+
+        /*
+         * Rotas com controllers */
+        Route::prefix('municipios')->group(function(){
+            // Rotas para listar e Adicionar Municipios no BD
+            Route::get('/{cod_municipio}/bairros', [App\Http\Controllers\admin\BairroController::class, 'bairrosDoMunicipio'])->name('municipio.bairros');
+
+        });
+
+
+
 // Route::get('/galeria', [App\Http\Controllers\admin\GaleriaController::class]);
 

@@ -25,7 +25,10 @@ class SalvarAtualizarFormRequestImovel extends FormRequest
     {
         return [
             'titulo' => ['required', 'string'],
-            'cidade_id' => ['required'],
+            // 'cidade_id' => ['required'],
+
+            'municipio' => ['required'],
+
             'categoria_id' => ['required'],
             'imagem-principal' =>['required'],
             'valor' =>['required'],

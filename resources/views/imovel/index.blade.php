@@ -20,6 +20,9 @@
                     <div id="slider-imovel">
 
                         <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a><img src="{{asset($imovel->fotoprincipal->path )}}" alt="Imagem - Agiliza Imóveis"></a>
+                            </div>
                             @foreach ($imagens as $imagem)
                                     <div class="swiper-slide">
                                         <a><img src="{{asset($imagem->path )}}" alt="TESSS"></a>
@@ -49,7 +52,6 @@
                     <div id="slider-imovel-miniaturas">
 
                         <div class="swiper-wrapper">
-
                             @foreach ($imagens as $imagem)
                                     <div class="swiper-slide">
                                         <a><img src="{{asset($imagem->path )}}" alt="Imagem - Agiliza Imóveis"></a>

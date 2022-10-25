@@ -1,15 +1,16 @@
 <!doctype html>
-<html>
+<html lang="pt-br">
 <head>
+
+
 
 <meta charset="iso-8859-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no, maximum-scale=1, minimum-scale=1" />
 <meta name="format-detection" content="telephone=no">
-{{-- <link rel="icon"  href="{{asset('logoAgiliza.ico')}}"/> --}}
-<link rel="shortcut icon" href="{{asset('logoAgiliza.ico')}}" type="image/x-icon">
 @include('template.metatags')
 
+<link rel="icon" href="{{asset('logoAgiliza.ico')}}" type="image/x-icon">
 <title>Agiliza Imóveis</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -19,6 +20,9 @@
 
 <script type="text/javascript" src="{{asset('js/jquery.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/swiper.min.js')}}"></script>
+
+{{-- <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> --}}
+
 
 </head>
 

@@ -153,32 +153,62 @@
                     </div>
 
 
-                    <div class="mx-auto flex justify-between">
-                        <div>
+                    {{-- Municipios e Bairros --}}
+                <div class="flex justify-between mb-4">
 
-                            <p>Bairro</p>
-                            <select name="cidade_id" id="cidade_id" class="rounded-lg">
-                                @foreach($Cidades as $cidade)
-                                    <option value="{{ $cidade->id}}"  {{ $cidade->id == $imovel->cidade_id ? 'selected' : '' }}>{{$cidade->nome}}</option>
-                                @endforeach
-                            </select>
-                            @error('cidade_id')
-                                <h1 class="text-red-600 ">* Campo obrigatório</h1>
-                            @enderror
-                        </div>
-                        <div>
+                    <div>
 
-                            <p>Categoria</p>
-                            <select name="categoria_id" id="categoria_id" class="rounded-lg">
-                                @foreach($Categorias as $categoria)
-                                    <option value="{{ $categoria->id}}" {{ $categoria->id == $imovel->categoria_id ? 'selected' : '' }} >{{$categoria->nome}}</option>
-                                @endforeach
-                            </select>
-                            @error('categoria_id')
-                                <h1 class="text-red-600 ">* Campo obrigatório</h1>
-                            @enderror
-                        </div>
+                        <p>Municipios</p>
+                        <select name="municipio_id" class="rounded-lg">
+                            <option disabled selected>Cidades</option>
+                            @foreach ($municipios as $key => $municipio)
+                                <option name="municipioOption" value="{{ $municipio->id}}" {{ $municipio->id == $imovel->municipio_id ? 'selected' : '' }}>{{$municipio->nome}}</option>
+                            @endforeach
+                        </select>
+                        @error('cidade_id')
+                            <h1 class="text-red-600 ">* Campo obrigatório</h1>
+                        @enderror
                     </div>
+
+                    <div>
+
+                        <p>Bairros</p>
+                        <select style="width: 300px;" name="bairro_id" class="rounded-lg">
+                            <option name="bairroOption" value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                    {{-- <div>
+
+                        <p>Bairro</p>
+                        <select name="cidade_id" id="cidade_id" class="rounded-lg">
+                            @foreach($Cidades as $cidade)
+                                <option value="{{ $cidade->id}}"  {{ $cidade->id == $imovel->cidade_id ? 'selected' : '' }}>{{$cidade->nome}}</option>
+                            @endforeach
+                        </select>
+                        @error('cidade_id')
+                            <h1 class="text-red-600 ">* Campo obrigatório</h1>
+                        @enderror
+                    </div> --}}
+
+                    <div>
+
+                        <p>Categoria</p>
+                        <select name="categoria_id" id="categoria_id" class="rounded-lg">
+                            @foreach($Categorias as $categoria)
+                                <option value="{{ $categoria->id}}" {{ $categoria->id == $imovel->categoria_id ? 'selected' : '' }} >{{$categoria->nome}}</option>
+                            @endforeach
+                        </select>
+                        @error('categoria_id')
+                            <h1 class="text-red-600 ">* Campo obrigatório</h1>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="mx-auto flex justify-between">
+
+
 
                     <div class="mx-auto mt-6">
                         <label for="visibility">Escolha a visibilidade do imóvel</label><br>
@@ -190,15 +220,47 @@
                             <h1 class="text-red-600 ">* Campo obrigatório</h1>
                         @enderror
                     </div>
-
-
+                </div>
                     {{-- Btn para submeter o formulario --}}
-                    <button class="w-full text-lg  bg-gray-800 rounded-lg btn-azul text-white text-center font-bold p-5 mt-6" type="submit">Atualizar</button>
-                    <a href="{{url()->previous()}}" class="w-full bg-gray-800 text-lg rounded-lg btn-cinza text-white text-center font-bold p-5 mt-6" type="submit">Cancelar</a>
+                        <button class="w-full text-lg  bg-gray-800 rounded-lg btn-azul text-white text-center font-bold p-5 mt-6" type="submit">Atualizar</button>
+                        <a href="{{url()->previous()}}" class="w-full bg-gray-800 text-lg rounded-lg btn-cinza text-white text-center font-bold p-5 mt-6">Cancelar</a>
 
                 </form>
             </div>
         </div>
     </section>
+
+    <script>
+
+
+        $('select[name=municipio_id]').change(function(){
+
+                // $("#bairros").html('Bairros {}')
+                var idCidade = $(this).val();
+                $.ajax({
+                    url: `/api/municipios/${idCidade}/bairros`,
+                    success: function(bairros){
+                        $('select[name=bairro_id]').empty();
+                        if(bairros.length > 0){
+
+                            $.each(bairros, function(key, value){
+                                // console.log(value)
+                                if(value){
+                                    $('select[name=bairro_id]').append(`<option value="${value.id}">${value.nome}</option>`);
+                                }
+                            });
+                        }else{
+                            $('select[name=bairro_id]').append(`<option disabled selected>Nenhum bairro desta cidade cadastrado</option>`);
+                        }
+
+                    },
+                    error: function(){
+                        $("#bairros").html("Error ao carregar bairros!!");
+                    },
+                });
+
+        })
+
+    </script>
 
 @endsection

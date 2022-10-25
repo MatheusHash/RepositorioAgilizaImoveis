@@ -3,11 +3,11 @@
 
 @section('content')
 
+@if($errors->any())
+<h2 class="p-5 text-gray-600">Verifique se todos os campos foram preenchidos da maneira correta!</h2>
+@endif
 <section class="bg-indigo-50 flex justify-center">
 
-    @if($errors->any())
-        <h2 class="p-5 text-gray-600">Verifique se todos os campos foram preenchidos da maneira correta!</h2>
-    @endif
         <div class="grid grid-cols-1">
             <div class="w-auto py-12" style="width: 720px">
                 <h1 class="text-center text-gray-600">Cadastrar imóvel</h1>
@@ -171,6 +171,33 @@
                         @enderror
                     </div>
 
+
+                    {{-- Municipios e Bairros --}}
+                    <div class="flex justify-between mb-4">
+
+                        <div>
+
+                            <p>Municipios</p>
+                            <select name="municipio" class="rounded-lg">
+                                <option disabled selected>Cidades</option>
+                                @foreach ($municipios as $key => $municipio)
+                                    <option name="municipioOption" value="{{ $municipio->id}}">{{$municipio->nome}}</option>
+                                @endforeach
+                            </select>
+                            @error('cidade_id')
+                                <h1 class="text-red-600 ">* Campo obrigatório</h1>
+                            @enderror
+                        </div>
+
+                        <div>
+
+                            <p>Bairros</p>
+                            <select style="width: 300px;" name="bairro" class="rounded-lg">
+                                <option name="bairroOption" value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="mx-auto flex justify-between mb-4">
                         {{-- <div>
 
@@ -185,7 +212,10 @@
                             @enderror
                         </div> --}}
 
-                        <div>
+
+
+
+                        {{-- <div>
 
                             <p>Localização</p>
                             <select name="cidade_id" id="cidade_id" class="rounded-lg">
@@ -193,7 +223,10 @@
                                     @foreach ($cidades as $cidade)
                                         <option value="{{ $cidade->id}}">{{$cidade->nome}}</option>
                                     @endforeach
+
                                 </optgroup>
+
+
                                     <br>
 
                                     <optgroup label="Bairros">
@@ -205,7 +238,7 @@
                             @error('cidade_id')
                                 <h1 class="text-red-600 ">* Campo obrigatório</h1>
                             @enderror
-                        </div>
+                        </div> --}}
 
 
                         <div>
@@ -252,8 +285,45 @@
                     {{-- Btn para submeter o formulario --}}
                     <div class="flex justify-center" >
                     <button class="w-full bg-gray-800 text-lg rounded-lg btn-azul text-white text-center font-bold p-5 mt-6" type="submit">Cadastrar Imóvel</button>
+
                 </div>
             </form>
+
+
+
+
+                    <script>
+
+
+                        $('select[name=municipio]').change(function(){
+
+                                // $("#bairros").html('Bairros {}')
+                                var idCidade = $(this).val();
+                                $.ajax({
+                                    url: `/api/municipios/${idCidade}/bairros`,
+                                    success: function(bairros){
+                                        $('select[name=bairro]').empty();
+                                        if(bairros.length > 0){
+
+                                            $.each(bairros, function(key, value){
+                                                // console.log(value)
+                                                if(value){
+                                                    $('select[name=bairro]').append(`<option value="${value.id}">${value.nome}</option>`);
+                                                }
+                                            });
+                                        }else{
+                                            $('select[name=bairro]').append(`<option disabled selected>Nenhum bairro desta cidade cadastrado</option>`);
+                                        }
+
+                                    },
+                                    error: function(){
+                                        $("#bairros").html("Error ao carregar bairros!!");
+                                    },
+                                });
+
+                        })
+
+                    </script>
             </div>
         </div>
     </section>

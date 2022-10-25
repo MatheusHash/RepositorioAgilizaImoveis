@@ -15,8 +15,11 @@ Route::get('/lancamentos', [\App\Http\Controllers\HomeController::class, 'lancam
 Route::get('/ordenadoMenorPreco/{motivo}', [\App\Http\Controllers\HomeController::class, 'ordenaMenorPreco'])->name('ordenaMenorPreco');
 Route::get('/ordenadoMaiorPreco/{motivo}', [\App\Http\Controllers\HomeController::class, 'ordenaMaiorPreco'])->name('ordenaMaiorPreco');
 
-Route::get('/imoveisFiltradosHome', [\App\Http\Controllers\HomeController::class, 'imoveisFiltradosPelaHome'])->name('imoveis.filtrados.home');
-Route::get('/imoveisFiltrados', [\App\Http\Controllers\HomeController::class, 'imoveisFiltradosForm2'])->name('imoveis.filtrados.form2');
+Route::get('/imoveis_filtrados', [\App\Http\Controllers\HomeController::class, 'filtrar_imoveis'])->name('imoveis.filtrados.home');
+
+
+// Route::get('/imoveisFiltradosHome', [\App\Http\Controllers\HomeController::class, 'imoveisFiltradosPelaHome'])->name('imoveis.filtrados.home');
+// Route::get('/imoveisFiltrados', [\App\Http\Controllers\HomeController::class, 'filtrar_imoveis'])->name('imoveis.filtrados.form2');
 Route::get('/imovel/{id}', [\App\Http\Controllers\HomeController::class, 'imovel'])->name('imovel');
 
 // Rota para add uma mensagem de Contato
@@ -84,6 +87,9 @@ Route::middleware('auth')->group(function (){ //Middleware para autenticar o usu
             // Rotas para listar e Adicionar cidades no BD
             Route::get('/', [App\Http\Controllers\admin\CidadeController::class, 'index'])->name('cidades.index');
             Route::post('/adicionar', [App\Http\Controllers\admin\CidadeController::class, 'store'])->name('cidades.store');
+
+            Route::get('/popularTabelaMunicipios', [App\Http\Controllers\admin\CidadeController::class, 'trocar_tabela_cidades_para_municipios_bairros'])->name('cidades.para.municipios');
+
         });
 
         Route::prefix('categorias')->group(function(){
@@ -97,6 +103,16 @@ Route::middleware('auth')->group(function (){ //Middleware para autenticar o usu
             Route::get('/', [App\Http\Controllers\admin\TagController::class, 'index'])->name('tags.index');
             Route::post('/adicionar', [App\Http\Controllers\admin\TagController::class, 'store'])->name('tags.store');
         });
+
+        Route::prefix('municipios')->group(function(){
+            // Rotas para listar e Adicionar Municipios no BD
+            Route::get('/',             [App\Http\Controllers\admin\MunicipioController::class, 'index'])->name('municipios.index');
+            Route::post('/adicionar',   [App\Http\Controllers\admin\MunicipioController::class, 'store'])->name('municipios.store');
+            Route::post('/bairros/adicionar',   [App\Http\Controllers\admin\BairroController::class, 'store'])->name('bairros.store');
+
+        });
+
+
     });
 });
 

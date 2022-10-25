@@ -10,6 +10,8 @@ use App\Models\Cidade;
 use App\Models\Categoria;
 use App\Models\Tag;
 use App\Models\Imovel;
+use App\Models\Municipio;
+
 use Illuminate\Support\Facades\Storage;
 
 class ImovelController extends Controller
@@ -21,15 +23,34 @@ class ImovelController extends Controller
         $bairros = Cidade::where('isCidade',null)->get();
         $Categorias = Categoria::all('id','nome');
         $tags = Tag::all('id','nome');
-        return view('admin/imoveis/imovel', ['cidades'=>$cidades,'bairros'=>$bairros,'Categorias'=>$Categorias,'tags'=>$tags]);
+        $municipios = Municipio::all();
+        return view('admin/imoveis/imovel', ['cidades'=>$cidades,'bairros'=>$bairros,'Categorias'=>$Categorias,'tags'=>$tags,'municipios'=>$municipios]);
     }
 
     public function store(SalvarAtualizarFormRequestImovel $request){
         // dd($request->all());
         $dataForm = $request->all();
         // Inserindo no banco de dados e salvando os dados da inserção na var $imovel
-        $imovel = Imovel::create($request->all());
+        // $imovel = Imovel::create($request->all());
+        $imovel= new Imovel();
 
+        $imovel->titulo = $request->titulo;
+        $imovel->motivo = $request->motivo;
+        $imovel->visibility = $request->visibility;
+        $imovel->valor = $request->valor;
+        $imovel->endereco = $request->endereco;
+        $imovel->googlemaps = $request->googlemaps;
+        $imovel->descricao = $request->descricao;
+        $imovel->quarto = $request->quarto;
+        $imovel->banheiro = $request->banheiro;
+        $imovel->suite = $request->suite;
+        $imovel->garagem = $request->garagem;
+        // $imovel->cidade_id = $request->cidade_id;
+        $imovel->categoria_id = $request->categoria_id;
+        $imovel->corretor = $request->corretor;
+        $imovel->municipio_id = $request->municipio;
+        $imovel->bairro_id = $request->bairro;
+        $imovel->save();
 
         if($request->has('tags-op')){
 
@@ -90,12 +111,18 @@ class ImovelController extends Controller
             }
 
         }
+
         return redirect()->route('imoveis.show');
     }
 
     public function show(){
-        $imoveis = Imovel::paginate(10);
-        $Galeria = Galeria::all()->where('principal',1);
+        $imoveis = Imovel::with('municipio')
+                           ->with('bairro')
+                           ->with('fotoPrincipal')
+                           ->paginate(10);
+
+        $Galeria = Galeria::all()
+                    ->where('principal',1);
         return view('admin/imoveis/listaDeImoveis', ['imoveis'=>$imoveis,'Galeria'=>$Galeria]);
     }
 
@@ -107,18 +134,20 @@ class ImovelController extends Controller
     }
 
     public function edit($id){
+        $municipios = Municipio::orderBy('nome','asc')->get();
+
         $imovel = Imovel::where('id',$id)->first();
         $galeria = Galeria::where('id_imovel',$id);
         if( $imovel = Imovel::where('id',$id)->first()){
             $Cidades = Cidade::all();
             $Categorias = Categoria::all();
-            return view('admin/imoveis/editarImovel', ['imovel'=>$imovel,'Cidades'=>$Cidades,'Categorias'=>$Categorias]);
+            return view('admin/imoveis/editarImovel', ['imovel'=>$imovel,'Cidades'=>$Cidades,'Categorias'=>$Categorias,'municipios'=>$municipios]);
         }
             return redirect()->route('imoveis.show');
     }
 
     public function update(Request $request, $id){
-        // dd($id,$request->all());
+        dd($request->all());
         Imovel::findOrFail($request->id)->update($request->all());
         return redirect()->route('imoveis.show');
     }
@@ -142,7 +171,7 @@ class ImovelController extends Controller
         $imovel = Imovel::find($idImovel);
         $imovel->tags()->detach($imovel->tags);
         $imovel->delete();
-
+        $msg='';
         /**
          * Modificar a maneira de deletar o diretorio de uploads
          */

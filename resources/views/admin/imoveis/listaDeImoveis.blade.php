@@ -2,10 +2,12 @@
 
 @section('content')
 
+
 <section>
     <section class="bg-gray-800" >
-
+        {{-- @dd($imoveis) --}}
         @if(count($imoveis))
+
 
              @foreach($imoveis as $key => $imovel)
                 <div class="container p-5">
@@ -25,9 +27,7 @@
                     <div class="space-around ">
 
                         <div class="imagem-principal">
-
-                            <img class="imagem-do-imovel" src="{{asset($imovel->galeria[0]->path)}}" alt="{{$imovel->titulo}}">
-
+                            <img class="imagem-do-imovel" src="{{asset($imovel->fotoPrincipal->path)}}" alt="{{$imovel->titulo}}">
                         </div>
 
                         <div class="ml-3 detalhes-imovel">
@@ -43,10 +43,17 @@
                                 </span>
                             </div>
                             <hr class="w-full mb-4">
-                            <div>
-                                <h3 class="text-gray-400">Endereço:</h3>
-                                <span class="text-white">{{$imovel->endereco}}</span>
-                            </div>
+                            {{-- @dump($imovel) --}}
+                            @empty(!$imovel->municipio)
+                                <div>
+                                    <h3 class="text-gray-400">Endereço:</h3>
+                                    {{-- @dd($imovel->municipio) --}}
+                                    <span class="text-white">{{$imovel->municipio->nome }} - {{$imovel->bairro->nome }}</span>
+                                    <br>
+                                    <span class="text-white">{{$imovel->endereco}}</span>
+                                </div>
+                            @endempty
+
                         </div>
 
                         <div class="botoes-acao grid">

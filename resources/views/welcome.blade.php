@@ -6,8 +6,8 @@
 
         <div id="container-filtro-inicial">
 
-            <h6>A agilidade e segurança que você precisa e merece!</h6>
 
+            <h6>A agilidade e segurança que você precisa e merece!</h6>
             <form action="{{route('imoveis.filtrados.home')}}" method="GET">
                 @csrf
                 <div id="selects-filtro-inicial">
@@ -57,10 +57,36 @@
 
                     </div>
 
-                    <div class="select-filtro-inicial" id="filtro-bairro">
+
+
+                    <div class="select-filtro-inicial" id="filtro-cidade">
 
                         <h5>
-                            Localização
+                            Cidades
+                            <i>
+                                <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"/></svg>
+                            </i>
+                        </h5>
+
+                        <input name="cidade" type="hidden" id="tipo-cidade">
+
+                        <div class="box-select-filtro">
+                            <div class="slider-filtros" id="slider-filtros-3">
+                                <ul id="lista-cidades">
+                                    @foreach ($cidades as $cidade)
+                                        <li class="cidade-item" ><a data-value="{{$cidade->id}}" data-tipo="{{$cidade->nome}}" data-name="cidade">{{$cidade->nome}}</a></li>
+                                    @endforeach
+                                    <br>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div   data-name="lista-bairros" class="select-filtro-inicial" id="filtro-bairro">
+
+                        <h5 id="listaDeBairros">
+                            Selecione uma cidade
                             <i>
                                 <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"/></svg>
                             </i>
@@ -69,29 +95,22 @@
                         <input name="bairro" type="hidden" id="tipo-bairro">
 
                         <div class="box-select-filtro">
-                            <div class="slider-filtros" id="slider-filtros-3">
-                                <ul>
-                                    <li>Cidades</li>
-                                    @foreach ($cidades as $cidade)
-                                        <li><a data-value="{{$cidade->id}}" data-tipo="{{$cidade->nome}}">{{$cidade->nome}}</a></li>
-                                    @endforeach
+                            <div class="slider-filtros" id="slider-filtros-4">
+                                <ul id="bairros">
+
                                     <br>
-{{--  --}}
-                                    <li>Bairros</li>
-                                    @foreach ($bairros as $bairro)
-                                        <li><a data-value="{{$bairro->id}}" data-tipo="{{$bairro->nome}}">{{$bairro->nome}}</a></li>
-                                    @endforeach
                                 </ul>
                             </div>
                         </div>
 
                     </div>
+                {{-- <div style="display: flex"> --}}
+                    <input  class="valor" placeholder="R$ - min " type="text" id="preco_min" name="preco_min">
+                    <input  class="valor" placeholder="R$ - max " type="text" id="preco_max" name="preco_max">
+                {{-- </div> --}}
 
+                <input name="codigo" type="text" id="codigo" name="codigo" placeholder="Buscar por código">
 
-                    <input name="codigo" type="text" id="codigo" name="codigo" placeholder="Buscar por código">
-
-                    <input type="submit" value="Buscar" onClick="">
-                    {{-- <input type="button" value="Buscar" onClick=""> --}}
 
                     <script>
                         $(document).ready(function() {
@@ -105,20 +124,39 @@
                                 $(select).find(" h5 ").click(function() {
 
                                     $(this).parent().toggleClass('show');
-
+                                    // console.log('test:  ' + $(this).parent().text());
                                 });
+
+                                $(select).find("#listaDeBairros").click(function(){
+                                    // if( $(this).data('name') == 'lista-bairros' ){
+                                        console.log($(this).text())
+                                        $("#bairros li a").on('click',function() {
+
+                                            $('.slider-filtros ul li a').removeClass('ativo');
+
+                                            inputValue.find('h5').html($(this).data('tipo') + '<i><svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"></path></svg></i>')
+
+                                            inputValue.find("input[type='hidden']").val($(this).data('value'));
+
+                                            inputValue.removeClass('show');
+
+                                        });
+                                    // }
+                                })
 
                                 $(select).find(" a ").click(function() {
 
-                                    $('.slider-filtros ul li a').removeClass('ativo');
+                                    console.log('a:  ' + $(this).text());
 
-                                    $(this).addClass('ativo');
+                                    $('.slider-filtros ul li a').removeClass('ativo');
 
                                     inputValue.find('h5').html($(this).data('tipo') + '<i><svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"></path></svg></i>')
 
                                     inputValue.find("input[type='hidden']").val($(this).data('value'));
 
                                     inputValue.removeClass('show');
+
+                                    // console.log(inputValue.find("input[type='hidden']").val());
 
                                 });
 
@@ -142,8 +180,14 @@
                                         $('#filtro-tipo').removeClass('show');
                                     }
 
+                                    if (!$(e.target).closest('#filtro-cidade').length){
+                                        $('#filtro-cidade').removeClass('show');
+
+                                    }
+
                                     if (!$(e.target).closest('#filtro-bairro').length){
                                         $('#filtro-bairro').removeClass('show');
+
                                     }
 
                                 });
@@ -151,10 +195,13 @@
 
                         });
                     </script>
-                    @if($errors->any())
-                        <p class="text-warning">*Escolha um tipo</p>
-                    @endif
+                    @error('codigo')
+                        <span class="text-warning">Escolha pelo menos um campo</span>
+                    @enderror
+
                 </div>
+                <input type="submit" value="Buscar">
+
             </form>
 
         </div>
@@ -549,5 +596,9 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript" src="{{asset('js/bairros.js')}}"></script>
+
 
 @include('template.bottom')

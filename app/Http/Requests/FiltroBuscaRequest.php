@@ -24,7 +24,9 @@ class FiltroBuscaRequest extends FormRequest
     public function rules()
     {
         return [
-            'motivo'=>['required_if:codigo,!=,null'],
+            'codigo'=>['required_without_all:categoria,cidade,motivo,preco_min,preco_max,quarto,banheiro,garagem,'],
+            // 'motivo'=>['required_if:codigo,!=,null'],
+            // 'bairro'=>['required_with:cidade']
             // 'bairro'=>['required'],
             // 'quarto'=>['required'],
             // 'banheiro'=>['required'],

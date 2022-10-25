@@ -1,3 +1,4 @@
+{{-- @dd($imoveis) --}}
 @includeFirst(['template.top'])
 
 <div id="container-page" class="interna">
@@ -5,52 +6,21 @@
     <div class="container">
 
         <div id="tit-qtd-imoveis">
-            <h6>{{count($imoveis)}} imóveis disponíveis em Passos</h6>
+            <h6>{{count($imoveis)}} imóveis disponíveis</h6>
         </div>
 
         <div id="left-imoveis">
 
-            <form action="{{route('imoveis.filtrados.form2')}}" method="GET">
+            <form action="{{route('imoveis.filtrados.home')}}" method="GET">
                 @csrf
                 <a onClick="showFiltros();" class="close-filtros">
                     <svg id="Capa_1" enable-background="new 0 0 320.591 320.591" height="512" viewBox="0 0 320.591 320.591" width="512" xmlns="http://www.w3.org/2000/svg"><g><g id="close_1_"><path d="m30.391 318.583c-7.86.457-15.59-2.156-21.56-7.288-11.774-11.844-11.774-30.973 0-42.817l257.812-257.813c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875l-259.331 259.331c-5.893 5.058-13.499 7.666-21.256 7.288z"/><path d="m287.9 318.583c-7.966-.034-15.601-3.196-21.257-8.806l-257.813-257.814c-10.908-12.738-9.425-31.908 3.313-42.817 11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414-6.35 5.522-14.707 8.161-23.078 7.288z"/></g></g></svg>
                 </a>
 
                 <div id="selects-filtro-inicial">
-
-                    <fieldset>
-                        <label>Selecione uma Cidade ou Bairro</label>
-                        <div class="select-filtro-inicial" id="filtro-bairro">
-
-                            <h5>
-                                Localização
-                                <i>
-                                    <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"/></svg>
-                                </i>
-                            </h5>
-
-                            <input name="bairro" type="hidden" id="tipo-bairro">
-
-                            <div class="box-select-filtro">
-                                <div class="slider-filtros" id="slider-filtros-3">
-                                    <ul>
-                                        <p>Cidades</p>
-                                        @foreach ($cidades as $cidade)
-                                            <li><a data-value="{{$cidade->id}}" data-tipo="{{$cidade->nome}}">{{$cidade->nome}}</a></li>
-                                        @endforeach
-                                        <br>
-
-                                        <p>Bairros</p>
-                                        @foreach ($bairros as $bairro)
-                                            <li><a data-value="{{$bairro->id}}" data-tipo="{{$bairro->nome}}">{{$bairro->nome}}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                    </fieldset>
-
+                    @error('codigo')
+                        <span class="text-warning">Escolha pelo menos um campo</span>
+                    @enderror
                     <fieldset>
                         <label>Selecione um tipo de imóvel</label>
                         <div class="select-filtro-inicial" id="filtro-tipo">
@@ -65,11 +35,62 @@
                             <input name="motivo" type="hidden" id="tipo-imovel">
 
                             <div class="box-select-filtro">
-                                <div class="slider-filtros" id="slider-filtros-2">
+                                <div class="slider-filtros" id="slider-filtros-1">
                                     <ul>
                                         <li><a data-value="2" data-tipo="Comprar">Comprar</a></li>
                                         <li><a data-value="1" data-tipo="Alugar">Alugar</a></li>
 
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Selecione uma Cidade</label>
+                        <div class="select-filtro-inicial" id="filtro-cidade">
+
+                            <h5 >
+                                Cidades
+                                <i>
+                                    <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"/></svg>
+                                </i>
+                            </h5>
+
+                            <input name="municipio" type="hidden" id="tipo-municipio">
+
+                            <div class="box-select-filtro">
+                                <div class="slider-filtros" id="slider-filtros-2">
+                                    <ul>
+                                        @foreach ($municipios as $municipio)
+                                            <li class="cidade-item"><a data-name="cidade" data-value="{{$municipio->id}}" data-tipo="{{$municipio->nome}}">{{$municipio->nome}}</a></li>
+                                        @endforeach
+                                        <br>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <label>Selecione um bairro</label>
+                        <div data-name="lista-bairros" class="select-filtro-inicial" id="filtro-bairro">
+
+                            <h5 id="listaDeBairros">
+                                Bairros
+                                <i>
+                                    <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"/></svg>
+                                </i>
+                            </h5>
+
+                            <input name="bairro" type="hidden" id="tipo-bairro">
+
+                            <div class="box-select-filtro">
+                                <div class="slider-filtros" id="slider-filtros-3">
+                                    <ul id="bairros">
+
+                                        <br>
                                     </ul>
                                 </div>
                             </div>
@@ -133,9 +154,7 @@
                         <input type="text" id="codigo" name="codigo" placeholder="Buscar por código">
                     </fieldset>
 
-                    @if($errors->any())
-                        <p class="text-warning">*Escolha um tipo</p>
-                    @endif
+
                     <input type="submit" value="Buscar">
                     <script>
                         $(document).ready(function() {
@@ -157,13 +176,26 @@
                                     $('.slider-filtros ul li a').removeClass('ativo');
 
                                     $(this).addClass('ativo');
-
                                     inputValue.find('h5').html($(this).data('tipo') + '<i><svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"></path></svg></i>')
 
                                     inputValue.find("input[type='hidden']").val($(this).data('value'));
 
                                     inputValue.removeClass('show');
 
+                                });
+
+                                $(select).find("#listaDeBairros").click(function(){
+                                        $("#bairros li a").on('click',function() {
+
+                                            $('.slider-filtros ul li a').removeClass('ativo');
+
+                                            inputValue.find('h5').html($(this).data('tipo') + '<i><svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.85 257.57"><path d="M225.92,354.71a31.59,31.59,0,0,1-22.37-9.27L9.27,151.16A31.64,31.64,0,0,1,54,106.41l171.9,171.91L397.83,106.41a31.64,31.64,0,0,1,44.74,44.75L248.29,345.45A31.54,31.54,0,0,1,225.92,354.71Z" transform="translate(0 -97.14)"></path></svg></i>')
+
+                                            inputValue.find("input[type='hidden']").val($(this).data('value'));
+
+                                            inputValue.removeClass('show');
+
+                                        });
                                 });
 
                             });
@@ -190,20 +222,20 @@
 
                             });
 
-                            //if(window.innerWidth > 768){
 
                                 $(document).on('click', function (e) {
 
                                     if (!$(e.target).closest('#filtro-tipo').length){
                                         $('#filtro-tipo').removeClass('show');
                                     }
-
+                                    if (!$(e.target).closest('#filtro-cidade').length){
+                                        $('#filtro-cidade').removeClass('show');
+                                    }
                                     if (!$(e.target).closest('#filtro-bairro').length){
                                         $('#filtro-bairro').removeClass('show');
                                     }
 
                                 });
-                            //}
 
                         });
                     </script>
@@ -232,7 +264,7 @@
                 <a href="{{route('alugar',['motivo'=>$motivo])}}" @if($motivo == 1) class="ativo" @endif>Alugar</a>
             </div>
 
-            <div id="filtro-ordenar">
+            {{-- <div id="filtro-ordenar">
                 <h6>
                     Ordenar por: <strong id="ordenar">Relevância</strong>
                     <i>
@@ -279,7 +311,7 @@
                     })
                 </script>
 
-            </div>
+            </div> --}}
 
             <div id="list-imoveis">
                 @if(count($imoveis) < 1 )
@@ -294,11 +326,23 @@
                             <div class="slider-imovel" id="slider-imovel-{{$key+1}}">
 
                                 <div class="swiper-wrapper">
-                                    @for($i=0; $i < count($imovel->galeria); $i++  )
+
+                                    @if ($imovel->fotoPrincipal)
+
                                         <div class="swiper-slide">
-                                            <a><img src="{{asset($imovel->galeria[$i]->path )}}" alt="Imagem do Imóvel {{$imovel->id}}"></a>
+                                            <a><img src="{{asset($imovel->fotoPrincipal->path)}}" alt="Imagem do Imóvel {{$imovel->id}}"></a>
                                         </div>
-                                    @endfor
+
+                                    @endif
+
+                                    @if ($imovel->galeria)
+                                        @for( $i=0; $i < count($imovel->galeria); $i++  )
+                                            <div class="swiper-slide">
+                                                <a><img src="{{asset($imovel->galeria[$i]->path )}}" alt="Imagem do Imóvel {{$imovel->id}}"></a>
+                                            </div>
+                                        @endfor
+                                    @endif
+
                                 </div>
                             </div>
 
@@ -415,5 +459,6 @@
     </div>
 
 </div>
+<script type="text/javascript" src="{{asset('js/bairros.js')}}"></script>
 
 @includeFirst(['template.bottom'])
