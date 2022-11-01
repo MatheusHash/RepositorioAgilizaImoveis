@@ -147,7 +147,7 @@ class ImovelController extends Controller
     }
 
     public function update(Request $request, $id){
-        dd($request->all());
+        // dd($request->all());
         Imovel::findOrFail($request->id)->update($request->all());
         return redirect()->route('imoveis.show');
     }

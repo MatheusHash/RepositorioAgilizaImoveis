@@ -25,7 +25,7 @@
                     <div class="mb-4">
                         <label for="titulo" class="block text-sm font-medium text-gray-700" style="font-size: 2em; margin: 15px;">Titulo</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
-                            <input type="text" name="titulo" id="price" value="{{ $imovel->titulo }}" class=" @error('titulo') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="Casa com Area de lazer">
+                            <input type="text" name="titulo" id="price" value="{{ $imovel->titulo }}" class=" @error('titulo') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" >
                             @error('titulo')
                                 <h1 class="text-red-600 ">* Campo obrigatório</h1>
                             @enderror
@@ -36,7 +36,7 @@
                     <div class="mb-4">
                         <label for="corretor" class="block text-sm font-medium text-gray-700" style="font-size: 2em; margin: 15px;">Nome</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
-                            <input type="text" name="corretor" id="corretor" value="{{ $imovel->corretor }}" class=" @error('corretor') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="Seu nome">
+                            <input type="text" name="corretor" id="corretor" value="{{ $imovel->corretor }}" class=" @error('corretor') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" >
                             @error('corretor')
                                 <h1 class="text-red-600 ">* Campo obrigatório</h1>
                             @enderror
@@ -47,7 +47,7 @@
                     <div class="mb-4">
                         <label for="valor" class="block text-sm font-medium text-gray-700 " style="font-size: 2em; margin: 15px;">Valor</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
-                            <input type="number"  step="0.01" name="valor" id="price" value="{{  $imovel->valor  }}" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="1050,50">
+                            <input type="number"  step="0.01" name="valor" id="price" value="{{  $imovel->valor  }}" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" >
                             @error('valor')
                                 <h1 class="text-red-600 ">* Campo obrigatório</h1>
                             @enderror
@@ -71,7 +71,7 @@
                     <div class="mb-4">
                         <label for="descricao" class="block text-sm font-medium text-gray-700" style="font-size: 2em; margin: 15px;">Descrção</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
-                            <textarea name="descricao" id="descricao"  class="h-20 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="Breve Descrição sobre o ímovel...">{{  $imovel->descricao  }}</textarea>
+                            <textarea name="descricao" id="descricao"  class="h-20 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" >{{  $imovel->descricao  }}</textarea>
                         </div>
                         @error('descricao')
                             <h1 class="text-red-600 ">* Campo obrigatório</h1>
@@ -83,7 +83,7 @@
                     <div class="mb-4">
                         <label for="googlemaps" class="block text-sm font-medium text-gray-700" style="font-size: 2em; margin: 15px;">Cole aqui o link do Google Maps</label>
                         <div class="mt-1 relative rounded-md shadow-sm">
-                            <textarea name="googlemaps" id="googlemaps" class="h-20 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="link">{{  $imovel->googlemaps  }}</textarea>
+                            <textarea name="googlemaps" id="googlemaps" class="h-20 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" >{{  $imovel->googlemaps  }}</textarea>
                         </div>
 
                     </div>
@@ -98,7 +98,7 @@
                                 <div class="mr-2">
                                     <label for="quarto" class="block text-sm font-medium text-gray-700">Quartos</label>
                                     <div class="mt-1 relative rounded-md shadow-sm">
-                                        <input type="number" name="quarto" id="quarto" value="{{  $imovel->quarto  }}" class="w-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="3">
+                                        <input type="number" name="quarto" id="quarto" value="{{  $imovel->quarto  }}" style="width: 100px" >
                                     </div>
                                     @error('quarto')
                                         <h1 class="text-red-600 ">* Campo obrigatório</h1>
@@ -107,7 +107,7 @@
                                 <div class="mr-2">
                                     <label for="banheiro" class="block text-sm font-medium text-gray-700">Banheiros</label>
                                     <div class="mt-1 relative rounded-md shadow-sm">
-                                        <input type="number" name="banheiro" id="banheiro" value="{{  $imovel->banheiro  }}" class="w-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="2">
+                                        <input type="number" name="banheiro" id="banheiro" value="{{  $imovel->banheiro  }}" style="width: 100px">
                                     </div>
                                     @error('banheiro')
                                         <h1 class="text-red-600 ">* Campo obrigatório</h1>
@@ -117,7 +117,7 @@
                                 <div class="mr-2">
                                     <label for="suite" class="block text-sm font-medium text-gray-700">Suíte</label>
                                     <div class="mt-1 relative rounded-md shadow-sm">
-                                        <input type="number" name="suite" id="suite" value="{{  $imovel->suite  }}" class="w-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="1">
+                                        <input type="number" name="suite" id="suite" value="{{  $imovel->suite  }}" style="width: 100px" >
                                     </div>
                                     @error('suite')
                                         <h1 class="text-red-600 ">* Campo obrigatório</h1>
@@ -127,7 +127,7 @@
                                 <div class="mr-2">
                                     <label for="garagem" class="block text-sm font-medium text-gray-700">Vagas - Garagem</label>
                                     <div class="mt-1 relative rounded-md shadow-sm">
-                                        <input type="number" name="garagem" id="garagem" value="{{  $imovel->garagem  }}" class="w-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="1">
+                                        <input type="number" name="garagem" id="garagem" value="{{  $imovel->garagem  }}" style="width: 100px">
                                     </div>
                                     @error('garagem')
                                         <h1 class="text-red-600 ">* Campo obrigatório</h1>

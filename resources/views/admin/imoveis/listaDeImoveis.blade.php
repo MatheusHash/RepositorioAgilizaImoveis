@@ -8,8 +8,8 @@
         {{-- @dd($imoveis) --}}
         @if(count($imoveis))
 
-
-             @foreach($imoveis as $key => $imovel)
+        @foreach($imoveis as $key => $imovel)
+        {{-- @dump($imovel->fotoPrincipal) --}}
                 <div class="container p-5">
                     <div>
                         <div class="flex">
@@ -26,9 +26,11 @@
 
                     <div class="space-around ">
 
-                        <div class="imagem-principal">
-                            <img class="imagem-do-imovel" src="{{asset($imovel->fotoPrincipal->path)}}" alt="{{$imovel->titulo}}">
-                        </div>
+                        @empty(!$imovel->fotoPrincipal)
+                            <div class="imagem-principal">
+                                <img class="imagem-do-imovel" src="{{asset($imovel->fotoPrincipal->path)}}" alt="{{$imovel->titulo}}">
+                            </div>
+                        @endempty
 
                         <div class="ml-3 detalhes-imovel">
                             <div>
@@ -43,12 +45,16 @@
                                 </span>
                             </div>
                             <hr class="w-full mb-4">
-                            {{-- @dump($imovel) --}}
+                            {{-- @dump($imovel->municipio) --}}
+                            {{empty($imovel->municipio)}}
+
                             @empty(!$imovel->municipio)
-                                <div>
+
+
+                                <div class="flex">
                                     <h3 class="text-gray-400">Endereço:</h3>
                                     {{-- @dd($imovel->municipio) --}}
-                                    <span class="text-white">{{$imovel->municipio->nome }} - {{$imovel->bairro->nome }}</span>
+                                    <span class="text-white">{{$imovel->municipio->nome }} - @empty($imovel->bairro) {{$imovel->bairro}} @endempty</span>
                                     <br>
                                     <span class="text-white">{{$imovel->endereco}}</span>
                                 </div>
