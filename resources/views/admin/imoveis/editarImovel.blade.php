@@ -175,22 +175,13 @@
                         <p>Bairros</p>
                         <select style="width: 300px;" name="bairro_id" class="rounded-lg">
                             <option name="bairroOption" value=""></option>
+                            @foreach ($imovel->municipio->bairros as $key => $bairro)
+                                <option name="bairroOption" value="{{ $bairro->id}}" {{ $bairro->id == $imovel->bairro_id ? 'selected' : '' }}>{{$bairro->nome}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
 
-                    {{-- <div>
-
-                        <p>Bairro</p>
-                        <select name="cidade_id" id="cidade_id" class="rounded-lg">
-                            @foreach($Cidades as $cidade)
-                                <option value="{{ $cidade->id}}"  {{ $cidade->id == $imovel->cidade_id ? 'selected' : '' }}>{{$cidade->nome}}</option>
-                            @endforeach
-                        </select>
-                        @error('cidade_id')
-                            <h1 class="text-red-600 ">* Campo obrigatório</h1>
-                        @enderror
-                    </div> --}}
 
                     <div>
 

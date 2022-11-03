@@ -134,14 +134,17 @@ class ImovelController extends Controller
     }
 
     public function edit($id){
-        $municipios = Municipio::orderBy('nome','asc')->get();
+        $municipios = Municipio::orderBy('nome','asc')
+                    ->with('bairros')
+                    ->get();
 
         $imovel = Imovel::where('id',$id)->first();
         $galeria = Galeria::where('id_imovel',$id);
         if( $imovel = Imovel::where('id',$id)->first()){
-            $Cidades = Cidade::all();
+            // $Cidades = Municipio::all();
+            // dd($bairros);
             $Categorias = Categoria::all();
-            return view('admin/imoveis/editarImovel', ['imovel'=>$imovel,'Cidades'=>$Cidades,'Categorias'=>$Categorias,'municipios'=>$municipios]);
+            return view('admin/imoveis/editarImovel', ['imovel'=>$imovel,'Categorias'=>$Categorias,'municipios'=>$municipios]);
         }
             return redirect()->route('imoveis.show');
     }
