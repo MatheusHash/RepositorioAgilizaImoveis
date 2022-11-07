@@ -23,9 +23,9 @@
                     <x-nav-link :href="route('imoveis.show')" :active="request()->routeIs('imoveis.show')">
                         {{ __('Listar Imóveis') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('cidades.index')" :active="request()->routeIs('cidades.index')">
+                    {{-- <x-nav-link :href="route('cidades.index')" :active="request()->routeIs('cidades.index')">
                         {{ __('Cidades e Bairros') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
                     <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.index')">
                         {{ __('Categorias') }}
                     </x-nav-link>

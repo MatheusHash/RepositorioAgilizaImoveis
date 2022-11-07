@@ -22,8 +22,8 @@ Route::get('/imoveis_filtrados', [\App\Http\Controllers\HomeController::class, '
 // Route::get('/imoveisFiltrados', [\App\Http\Controllers\HomeController::class, 'filtrar_imoveis'])->name('imoveis.filtrados.form2');
 Route::get('/imovel/{id}', [\App\Http\Controllers\HomeController::class, 'imovel'])->name('imovel');
 
-// Rota para add uma mensagem de Contato
-Route::post('/contato/adicionar', [\App\Http\Controllers\ContatoController::class, 'store'])->name('contato.enviar');
+// // Rota para add uma mensagem de Contato
+// Route::post('/contato/adicionar', [\App\Http\Controllers\ContatoController::class, 'store'])->name('contato.enviar');
 
 /*
  * Fim das rotas Controllers
@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function (){ //Middleware para autenticar o usu
             Route::get('/', [App\Http\Controllers\admin\CidadeController::class, 'index'])->name('cidades.index');
             Route::post('/adicionar', [App\Http\Controllers\admin\CidadeController::class, 'store'])->name('cidades.store');
 
-            Route::get('/popularTabelaMunicipios', [App\Http\Controllers\admin\CidadeController::class, 'trocar_tabela_cidades_para_municipios_bairros'])->name('cidades.para.municipios');
+            // Route::get('/popularTabelaMunicipios', [App\Http\Controllers\admin\CidadeController::class, 'trocar_tabela_cidades_para_municipios_bairros'])->name('cidades.para.municipios');
 
         });
 

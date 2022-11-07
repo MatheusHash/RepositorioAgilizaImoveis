@@ -381,7 +381,7 @@
 
                         <div class="info-list-imovel">
                             <h5>{{$imovel->titulo}}</h5>
-                            <small>Código do imóvel: {{$imovel->id}}</small>
+                            <small id="imovel">Código do imóvel: {{$imovel->id}}</small>
                             <h6>Descrição</h6>
                             <ul>
                                 {{-- <li>
@@ -432,7 +432,7 @@
                             </ul>
                             <div class="bts-list-imovel">
                                 <a id="detalhes-imovel-{{$imovel->id}}" href="{{route('imovel', [$imovel->id])}}">Detalhes</a>
-                                <a onClick="showForm();">Contatar</a>
+                                <a onClick="showForm();" data-value="{{$imovel->id}}">Contatar</a>
                                 {{-- <a>Compartilhar</a> --}}
 
                                 <a id="compartilhar" href="https://api.whatsapp.com/send?text=Olha este imóvel incrível disponível na Agiliza Imóveis: {{route('imovel', [$imovel->id])}}" target="_blank" rel="noopener external nofollow" aria-label="Compartilhe o Imóvel {{$imovel->titulo}} no WhatsApp">
@@ -459,6 +459,17 @@
     </div>
 
 </div>
+
+<script type="text/javascript" src="{{asset('/js/archives/formContato.js')}}"></script>
+
+<script type="text/javascript">
+
+    document.getElementById('list-imoveis').addEventListener('click',(event)=>{
+        formulario(event);
+    });
+
+</script>
+
 <script type="text/javascript" src="{{asset('js/bairros.js')}}"></script>
 
 @includeFirst(['template.bottom'])

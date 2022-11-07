@@ -600,5 +600,6 @@
 
 <script type="text/javascript" src="{{asset('js/bairros.js')}}"></script>
 
+{{-- <script type="text/javascript" src="{{asset('js/archives/axios.js')}}"></script> --}}
 
 @include('template.bottom')

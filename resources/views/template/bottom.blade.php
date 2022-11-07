@@ -3,7 +3,7 @@
     <div class="container">
 
         <div id="container-top-footer-site">
-            
+
             <div class="box">
                 <div id="logo-footer">
                     <img src="imgs/logo_agiliza_imoveis.png" alt="">
@@ -69,7 +69,7 @@
                 </li>
                 <li>
                     <a href="https://www.google.com/maps/place/R.+Sete+de+Setembro,+78+-+Centro,+Passos+-+MG,+37900-085/data=!4m2!3m1!1s0x94b6c3cb2d48e6c9:0x7dc55c7acdfa7fb8?sa=X&ved=2ahUKEwjXluu_06_5AhXpA7kGHS0FDYkQ8gF6BAgREAE" target="_blank">
-                        <i> 
+                        <i>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.47 236.66"><g id="Camada_2" data-name="Camada 2"><g id="Capa_1" data-name="Capa 1"><path d="M174.29,41.15A94.22,94.22,0,0,0,95.74,0,94.22,94.22,0,0,0,17.18,41.15a95.56,95.56,0,0,0-11.12,88,75.1,75.1,0,0,0,13.87,22.9l69.51,81.65a8.27,8.27,0,0,0,12.6,0l69.49-81.62a75.33,75.33,0,0,0,13.87-22.88A95.59,95.59,0,0,0,174.29,41.15Zm-4.39,82.31A59.09,59.09,0,0,1,159,141.34s0,0,0,0L95.74,215.63,32.49,141.34A59,59,0,0,1,21.56,123.4,79,79,0,0,1,30.8,50.56a77.88,77.88,0,0,1,64.94-34,77.91,77.91,0,0,1,64.94,34A79.07,79.07,0,0,1,169.9,123.46Z"/><path d="M95.74,49.1a46.34,46.34,0,1,0,46.34,46.34A46.39,46.39,0,0,0,95.74,49.1Zm0,76.13a29.79,29.79,0,1,1,29.79-29.79A29.83,29.83,0,0,1,95.74,125.23Z"/></g></g></svg>
                         </i>
                         R. Sete de Setembro, 78 - Centro, Passos - MG
@@ -81,6 +81,7 @@
 
     </div>
 </footer>
+
 <div id="lt-form">
     <script>
         function showForm(){
@@ -89,8 +90,14 @@
         }
     </script>
 
-     @include("template/formularioContato");
-
+    @include("template/formularioContato");
 </div>
+
+
+
+{{-- Scripts --}}
+<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/archives/enviarContato.js')}}"></script>
+<script src="{{asset('js/archives/arrayToObject.js')}}"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -14,6 +15,11 @@ module.exports = {
             },
         },
     },
-
+    plugins: [
+        require("@tailwindcss/forms")({
+            strategy: 'base', // only generate global styles
+            strategy: 'class', // only generate classes
+          }),
+    ],
     plugins: [require('@tailwindcss/forms')],
 };

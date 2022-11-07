@@ -24,6 +24,7 @@ class SalvarAtualizarFormRequestImovel extends FormRequest
     public function rules()
     {
         return [
+            'codImovel',
             'nome'=>['required'],
             'email'=>['required'],
             'telefone'=>['required'],

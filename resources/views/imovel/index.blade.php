@@ -109,7 +109,7 @@
 
                 <div class="info-list-imovel">
                     <h5>Preço: R$@php echo number_format($imovel->valor, 2, ',', '.') @endphp</h5>
-                    <small>Código do imóvel: {{$imovel->id}}</small>
+                    <small data-value="{{$imovel->id}}" id="cod-imovel">Código do imóvel: {{$imovel->id}}</small>
                     <h6>Descrição</h6>
                     <ul>
                         {{-- <li>
@@ -203,7 +203,21 @@
 
             <div id="right-imovel">
                 <div id="right-imovel-int">
+                    {{-- <script src="{{asset('js/archives/formContato.js')}}"></script> --}}
                     @include("template/formularioContato")
+                    <script>
+                        let target = document.getElementById('cod-imovel');
+                        let cod = target.getAttribute("data-value");
+
+                        if (cod){
+                            let formContato = document.getElementById('campos-form');
+
+                            let codImovel = document.getElementById('codImovel').value = cod;
+                            console.log(document.getElementById('codImovel').value);
+                        }
+
+
+                    </script>
                 </div>
             </div>
 

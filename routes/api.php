@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// Rota para add uma mensagem de Contato
+Route::post('/contato/adicionar', [\App\Http\Controllers\ContatoController::class, 'store'])->name('contato.enviar');
 
 
         /*
