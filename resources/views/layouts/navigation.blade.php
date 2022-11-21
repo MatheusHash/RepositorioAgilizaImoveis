@@ -32,7 +32,7 @@
                     <x-nav-link :href="route('tags.index')" :active="request()->routeIs('tags.index')">
                         {{ __('Tags') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('municipios.index')" :active="request()->routeIs('tags.index')">
+                    <x-nav-link :href="route('municipios.index')" :active="request()->routeIs('municipios.index')">
                         {{ __('Municipios e Bairros') }}
                     </x-nav-link>
                 </div>
