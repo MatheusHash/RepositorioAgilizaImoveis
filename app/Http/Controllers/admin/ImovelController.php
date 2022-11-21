@@ -12,7 +12,7 @@ use App\Models\Tag;
 use App\Models\Imovel;
 use App\Models\Municipio;
 
-use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\Storage;
 
 class ImovelController extends Controller
 {
@@ -26,6 +26,7 @@ class ImovelController extends Controller
         $municipios = Municipio::all();
         return view('admin/imoveis/imovel', ['cidades'=>$cidades,'bairros'=>$bairros,'Categorias'=>$Categorias,'tags'=>$tags,'municipios'=>$municipios]);
     }
+
 
     public function store(SalvarAtualizarFormRequestImovel $request){
         // dd($request->all());
@@ -115,7 +116,20 @@ class ImovelController extends Controller
         return redirect()->route('imoveis.show');
     }
 
-    public function show(){
+    public function show(Request $request){
+        $Categorias = Categoria::all('id','nome');
+
+        if ($request->has('searchInput') || $request->has('searchCategory') ) {
+            $imoveis = Imovel::where('id',$request->searchInput)->orWhere('titulo','like', '%'.$request->searchInput.'%')->orWhere('categoria_id',$request->searchCategory)
+                ->with('municipio')
+                ->with('bairro')
+                ->with('fotoPrincipal')
+                ->paginate(15);
+            $Galeria = Galeria::all()
+                ->where('principal',1);
+            return response()->view('admin/imoveis/listaDeImoveis', ['imoveis'=>$imoveis,'Galeria'=>$Galeria, 'categorias'=>$Categorias]);
+        }
+
         $imoveis = Imovel::with('municipio')
                            ->with('bairro')
                            ->with('fotoPrincipal')
@@ -123,7 +137,7 @@ class ImovelController extends Controller
 
         $Galeria = Galeria::all()
                     ->where('principal',1);
-        return view('admin/imoveis/listaDeImoveis', ['imoveis'=>$imoveis,'Galeria'=>$Galeria]);
+        return view('admin/imoveis/listaDeImoveis', ['imoveis'=>$imoveis,'Galeria'=>$Galeria, 'categorias'=>$Categorias]);
     }
 
     public function showById($id){
@@ -138,8 +152,7 @@ class ImovelController extends Controller
                     ->with('bairros')
                     ->get();
 
-        $imovel = Imovel::where('id',$id)->first();
-        $galeria = Galeria::where('id_imovel',$id);
+
         if( $imovel = Imovel::where('id',$id)->first()){
             // $Cidades = Municipio::all();
             // dd($bairros);
@@ -161,11 +174,15 @@ class ImovelController extends Controller
         // dd(Imovel::find($idImovel),$idImovel);
         if($imovel->visibility == 1){
             $imovel->visibility = 0;
+            $imovel->update();
+            return response()->json(['success'=>'Imóvel visível para todos!'], 200, ['headers'=>'noneheader']);
+
         }else{
             $imovel->visibility = 1;
+            $imovel->update();
+            return response()->json(['success'=>'Imóvel ocultado!'], 200, ['headers'=>'noneheader']);
         }
-        $imovel->update();
-        return back();
+        return response()->json(['error'=>'Falha ao executar esta ação!'], 404,['headers'=>'noneheader']);
     }
 
     public function destroy($idImovel){
@@ -174,11 +191,10 @@ class ImovelController extends Controller
         $imovel = Imovel::find($idImovel);
         $imovel->tags()->detach($imovel->tags);
         $imovel->delete();
-        $msg='';
         /**
          * Modificar a maneira de deletar o diretorio de uploads
          */
         // Storage::disk('public')->deleteDirectory('images/'. $idImovel);
-        return redirect()->route('imoveis.show')->with('msg','Imóvel deletado com sucesso!');
+        return response()->json(['success'=>'Imóvel ocultado!'], 200, ['headers'=>'noneheader']);
     }
 }

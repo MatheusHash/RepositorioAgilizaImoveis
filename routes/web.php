@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function (){ //Middleware para autenticar o usu
 
             // Rotaa para listar todos os imoveis
             Route::get('/listaDeImoveis', [App\Http\Controllers\admin\ImovelController::class,'show'])->name('imoveis.show');
+            Route::get('/searchImoveis', [App\Http\Controllers\admin\ImovelController::class,'adminSearchImoveis'])->name('imoveis.filter');
+
+
 
             // Rota para um mostrar imovel pelo ID
             Route::get('/{id}', [App\Http\Controllers\admin\ImovelController::class,'showById'])->name('showById.index');
@@ -66,10 +69,10 @@ Route::middleware('auth')->group(function (){ //Middleware para autenticar o usu
             Route::put('/{id}/update',[App\Http\Controllers\admin\ImovelController::class, 'update'])->where('id', '[0-9]+')->name('imoveis.update');
 
             // Rota para deletar um ímovel //=> No controller também será erxcluído as imagens da galeria
-            Route::delete('/{id}/delete',[App\Http\Controllers\admin\ImovelController::class, 'destroy'])->where('id', '[0-9]+')->name('imoveis.destroy');
+            Route::post('/{id}/delete',[App\Http\Controllers\admin\ImovelController::class, 'destroy'])->where('id', '[0-9]+')->name('imoveis.destroy');
 
             // Rota para alterar a visibilidade de um ímovel
-            Route::put('/{id}/visibilidade',[App\Http\Controllers\admin\ImovelController::class, 'visibilidade'])->where('id', '[0-9]+')->name('imoveis.visibility');
+            Route::post('/{id}/visibilidade',[App\Http\Controllers\admin\ImovelController::class, 'visibilidade'])->where('id', '[0-9]+')->name('imoveis.visibility');
 
 
             //rotas da galeria
