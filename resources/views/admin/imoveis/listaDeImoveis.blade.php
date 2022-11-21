@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<section>
     <section class="bg-gray-800" >
         {{-- @dd($imoveis) --}}
 
@@ -64,10 +63,10 @@
                             <h3 class="opacity-25 cursor-not-allowed">inserido em: {{ date('d-m-Y', strtotime($imovel->created_at))}} por: {{$imovel->corretor}}  </h3>
 
                         </div>
-                        <span class="flex gap-2 text-blue-500 text-[18px] mr-10">
+                        <span class="grid gap-2 text-blue-500 text-[18px] mr-10 text-center">
 
                             <h3>{{$imovel->municipio->nome }} </h3>
-                            @empty(!$imovel->bairro) <span>-  {{$imovel->bairro->nome}}</span> @endempty
+                            @empty(!$imovel->bairro) <span>{{$imovel->bairro->nome}}</span> @endempty
                         </span>
                     </div>
                     <div class="flex mx-auto  w-11/12 ">
@@ -82,7 +81,7 @@
                             <p class="text-blue-600 mt-5">{{$imovel->endereco}} </p>
                         </div>
 
-                        <div class="grid grid-cols-1 font-bold gap-1">
+                        <div class="grid grid-cols-1 font-bold gap-1 max-h-64">
                             <button onclick="window.location.href='{{ route('galeria', $imovel->id)  }}';" class="px-3  uppercase flex justify-center items-center bg-green-600 text-white">
                             <span class="material-symbols-outlined">
                                 photo_library
@@ -131,8 +130,8 @@
 
     <script>
         document.getElementById('list-imoveis').addEventListener('click',(event)=> {
-            event.preventDefault();
             if (event.target.tagName === 'BUTTON' || event.target.tagName === 'SPAN') {
+                event.preventDefault();
                 let btn = event.target;
                 let action = btn.getAttribute("data-tipo");
                 let cod = btn.getAttribute("data-value");

@@ -133,7 +133,7 @@ class ImovelController extends Controller
         $imoveis = Imovel::with('municipio')
                            ->with('bairro')
                            ->with('fotoPrincipal')
-                           ->paginate(10);
+                           ->paginate(1);
 
         $Galeria = Galeria::all()
                     ->where('principal',1);
