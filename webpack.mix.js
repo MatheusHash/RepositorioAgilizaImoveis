@@ -1,5 +1,11 @@
 const mix = require('laravel-mix');
 
+<<<<<<< Updated upstream
+mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
+    require('tailwindcss'),
+    require('autoprefixer'),
+]);
+=======
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('tailwindcss'),
@@ -10,3 +16,4 @@ mix.js('resources/js/app.js', 'public/js')
     processCssUrls: false,
     postCss: [tailwindcss('./tailwind.config.js')],
 });
+>>>>>>> Stashed changes
